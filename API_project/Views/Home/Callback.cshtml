@@ -1,0 +1,58 @@
+﻿@model IEnumerable<API_project.Models.TopArtist>
+
+@{
+    ViewData["Title"] = "Callback";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Your top artists</h1>
+</div>
+
+<div class="text-center mt-4 row justify-content-center">
+    @if (Model.Count() > 0)
+    {
+        int i = 0;
+        @foreach (var item in Model)
+        {
+            <div class="card m-1" style="width:350px;">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.name)</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.genres)</h6>
+                    <p>
+                        @ViewBag.Popularity[i]
+                    </p>
+                    <img src="@Html.DisplayFor(modelItem => item.imageUrl)" width="125" height="125" alt="Release picture" />
+                </div>
+            </div>
+            i = i + 1;
+        }
+    }
+    else
+    {
+        <p>Artitst data available</p>
+    }
+</div>
+
+<div class="text-center mt-4">
+    <h2>Your top genres</h2>
+    @if (!string.IsNullOrEmpty(ViewData["ChartPath"].ToString()))
+    {
+        <img src="@ViewData["ChartPath"]" alt="Chart image" style="max-width:75%; height:auto;" />
+    }
+    else
+    {
+        <p>Chart not available</p>
+    }
+</div>
+
+<div class="text-center mt-4 row justify-content-center">
+    <h2>Recommended music artists based of your taste</h2>
+        @foreach (var item in ViewBag.Reccomendations)
+        {
+            <div class="card m-1" style="width:350px;">
+                <div class="card-body">
+                <a href ="https://google.com/search?q=@item.name"><h5 class="card-title">@item.name</h5></a>
+                </div>
+            </div>
+        }
+</div>
